@@ -1,6 +1,6 @@
 # Neko Mod for VFurrika!
 
-![](https://img.shields.io/github/v/release/RaphaelNeko/NekoModForVFurrika?label=DOWNLOAD%20LATEST)(https://github.com/RaphaelNeko/NekoModForVFurrika/releases)
+[![](https://img.shields.io/github/v/release/RaphaelNeko/NekoModForVFurrika?label=DOWNLOAD%20LATEST)](https://github.com/RaphaelNeko/NekoModForVFurrika/releases)
 
 ### If you want to learn how to set up the mod, please visit https://raphaelneko.com/vfurrika-mod
 
