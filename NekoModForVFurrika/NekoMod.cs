@@ -18,8 +18,12 @@ namespace NekoModForVFurrika
 
         private List<Transform> TitleHeads = new List<Transform>();
         private bool TitleSpinMode = false;
+
         private GameObject NekoMenu;
+        private bool NekoMenuGenerated = false;
+
         // private bool isLeaderboardDisabled = false;
+
         private List<Sprite> CustomHeads = new List<Sprite>();
         private Sprite EvolutionBG;
         private List<Vector3> EvolutionHeadPositions = new List<Vector3>();
@@ -76,15 +80,17 @@ namespace NekoModForVFurrika
         private void CreateModMenu()
         {
             // Pretty messy way to create the mod menu, but I kinda rushed it to keep a style consistency with the base game.
-
-            var MenuRoot = new GameObject("NekoModMenu");
-            MenuRoot.transform.SetParent(GameManager.Instance.GetComponentInChildren<CanvasScaler>().transform);
-            NekoMenu = MenuRoot.gameObject;
-            MenuRoot.transform.localPosition = Vector3.zero;
-            MenuRoot.transform.localScale = Vector3.one;
-            var bg = MenuRoot.gameObject.AddComponent<Image>();
-            bg.color = new Color(0, 0, 0, .99f);
-            bg.GetComponent<RectTransform>().sizeDelta = new Vector2(2000, 2000);
+            if (NekoMenu == null)
+            {
+                var MenuRoot = new GameObject("NekoModMenu");
+                MenuRoot.transform.SetParent(GameManager.Instance.GetComponentInChildren<CanvasScaler>().transform);
+                NekoMenu = MenuRoot.gameObject;
+                MenuRoot.transform.localPosition = Vector3.zero;
+                MenuRoot.transform.localScale = Vector3.one;
+                var bg = MenuRoot.gameObject.AddComponent<Image>();
+                bg.color = new Color(0, 0, 0, .99f);
+                bg.GetComponent<RectTransform>().sizeDelta = new Vector2(2000, 2000);
+            }
 
             var templateButton = GameObject.Find("Canvas/PLAY");
             
@@ -93,32 +99,36 @@ namespace NekoModForVFurrika
             var nekoMenuButton = CreateNewButton(templateButton, "Neko Mod\n<size=50%>v1.0</size>", toggleNekoMenuEvent, true);
             nekoMenuButton.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, 150);
 
-            var closeMenuButton = CreateNewButton(templateButton, "Close", toggleNekoMenuEvent);
-            closeMenuButton.transform.SetParent(MenuRoot.transform);
-            closeMenuButton.GetComponent<RectTransform>().anchoredPosition += new Vector2(-725, -250);
+            if (!NekoMenuGenerated)
+            {
+                var closeMenuButton = CreateNewButton(templateButton, "Close", toggleNekoMenuEvent);
+                closeMenuButton.transform.SetParent(NekoMenu.transform);
+                closeMenuButton.GetComponent<RectTransform>().anchoredPosition += new Vector2(-725, -250);
 
-            var aboutMod = CreateNewButton(templateButton, "About the mod\n\n<size=50%>This mod has been developed by\nRaphael Neko using MelonLoader.</size>", null);
-            aboutMod.GetComponent<Button>().enabled = false;
-            aboutMod.transform.SetParent(MenuRoot.transform);
-            var aboutRT = aboutMod.GetComponent<RectTransform>();
-            aboutRT.sizeDelta = new Vector2(1050, 350);
-            aboutRT.anchoredPosition = new Vector2(0, 250);
+                var aboutMod = CreateNewButton(templateButton, "About the mod\n\n<size=50%>This mod has been developed by\nRaphael Neko using MelonLoader.</size>", null);
+                aboutMod.GetComponent<Button>().enabled = false;
+                aboutMod.transform.SetParent(NekoMenu.transform);
+                var aboutRT = aboutMod.GetComponent<RectTransform>();
+                aboutRT.sizeDelta = new Vector2(1050, 350);
+                aboutRT.anchoredPosition = new Vector2(0, 250);
 
 
-            var howToEvent = new UnityEvent();
-            howToEvent.AddListener(() => { Application.OpenURL("https://raphaelneko.com/vfurrika-mod#tutorial"); });
-            var howTo = CreateNewButton(templateButton, "How to set up custom heads", howToEvent, true);
-            howTo.transform.SetParent(MenuRoot.transform);
-            howTo.GetComponent<RectTransform>().sizeDelta = new Vector2(1050, 100);
+                var howToEvent = new UnityEvent();
+                howToEvent.AddListener(() => { Application.OpenURL("https://raphaelneko.com/vfurrika-mod#tutorial"); });
+                var howTo = CreateNewButton(templateButton, "How to set up custom heads", howToEvent, true);
+                howTo.transform.SetParent(NekoMenu.transform);
+                howTo.GetComponent<RectTransform>().sizeDelta = new Vector2(1050, 100);
 
-            var openCustomFolderEvent = new UnityEvent();
-            openCustomFolderEvent.AddListener(() => { Application.OpenURL($"{Application.streamingAssetsPath}/CustomHeads/"); });
-            var openCustomFolder = CreateNewButton(templateButton, "Open custom folder", openCustomFolderEvent, true);
-            openCustomFolder.transform.SetParent(MenuRoot.transform);
-            openCustomFolder.GetComponent<RectTransform>().sizeDelta = new Vector2(1050, 75);
-            openCustomFolder.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, -110);
+                var openCustomFolderEvent = new UnityEvent();
+                openCustomFolderEvent.AddListener(() => { Application.OpenURL($"{Application.streamingAssetsPath}/CustomHeads/"); });
+                var openCustomFolder = CreateNewButton(templateButton, "Open custom folder", openCustomFolderEvent, true);
+                openCustomFolder.transform.SetParent(NekoMenu.transform);
+                openCustomFolder.GetComponent<RectTransform>().sizeDelta = new Vector2(1050, 75);
+                openCustomFolder.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, -110);
 
-            NekoMenu.SetActive(false);
+                NekoMenu.SetActive(false);
+                NekoMenuGenerated = true;
+            }
         }
 
         private GameObject CreateNewButton(GameObject buttonTemplate, string buttonText, UnityEvent onClick, bool autoSize = false)
@@ -216,11 +226,12 @@ namespace NekoModForVFurrika
             #endregion
         }
 
-        
+        /*
         public override void OnUpdate()
         {
             if (SceneManager.GetActiveScene().buildIndex == 0 && TitleHeads.Count > 0 && TitleSpinMode) TitleHeadsSpin();
         }
+        */
         
 
         private void TitleHeadsSpin()
@@ -228,6 +239,8 @@ namespace NekoModForVFurrika
             foreach (var head in TitleHeads) head.Rotate(Vector3.forward * (1500 * Time.deltaTime));
         }
     }
+
+    #region Existing Script Patches
 
     [HarmonyPatch(typeof(BubbleObject), "SetCurrentFruit")]
     public static class PatchPawFruit
@@ -294,4 +307,6 @@ namespace NekoModForVFurrika
             if (customSprite != null) img.sprite = customSprite;
         }
     }
+
+    #endregion
 }
