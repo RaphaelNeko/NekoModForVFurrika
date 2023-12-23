@@ -96,7 +96,7 @@ namespace NekoModForVFurrika
             
             var toggleNekoMenuEvent = new UnityEvent();
             toggleNekoMenuEvent.AddListener(() => { ToggleNekoMenu(); });
-            var nekoMenuButton = CreateNewButton(templateButton, "Neko Mod\n<size=50%>v1.0</size>", toggleNekoMenuEvent, true);
+            var nekoMenuButton = CreateNewButton(templateButton, "Neko Mod\n<size=50%>v1.1</size>", toggleNekoMenuEvent, true);
             nekoMenuButton.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, 150);
 
             if (!NekoMenuGenerated)
@@ -248,17 +248,20 @@ namespace NekoModForVFurrika
         private static void Postfix(BubbleObject __instance)
         {
             var img = __instance.GetComponentInChildren<FruitController>().GetComponent<SpriteRenderer>();
-            int sprite = 0;
-            if (img.sprite.name.Contains("ANDRE")) sprite = 1;
-            if (img.sprite.name.Contains("Star")) sprite = 2;
-            if (img.sprite.name.Contains("Skai")) sprite = 3;
-            if (img.sprite.name.Contains("MIXI")) sprite = 4;
-            if (img.sprite.name.Contains("S3A")) sprite = 5;
-            if (img.sprite.name.Contains("Dooper")) sprite = 6;
-            if (img.sprite.name.Contains("Chai")) sprite = 7;
-            if (img.sprite.name.Contains("JT")) sprite = 8;
-            if (img.sprite.name.Contains("Chester")) sprite = 9;
-            if (img.sprite.name.Contains("dingo")) sprite = 10;
+            int sprite = -1;
+            if (img.sprite.name.Contains("LUIROI")) sprite = 0;
+            else if (img.sprite.name.Contains("ANDRE")) sprite = 1;
+            else if (img.sprite.name.Contains("Star")) sprite = 2;
+            else if (img.sprite.name.Contains("Skai")) sprite = 3;
+            else if (img.sprite.name.Contains("MIXI")) sprite = 4;
+            else if (img.sprite.name.Contains("S3A")) sprite = 5;
+            else if (img.sprite.name.Contains("Dooper")) sprite = 6;
+            else if (img.sprite.name.Contains("Chai")) sprite = 7;
+            else if (img.sprite.name.Contains("JT")) sprite = 8;
+            else if (img.sprite.name.Contains("Chester")) sprite = 9;
+            else if (img.sprite.name.Contains("dingo")) sprite = 10;
+
+            if (sprite == -1) return;
             var customSprite = NekoMod.GetLoadedHead(sprite);
             if (customSprite != null) img.sprite = customSprite;
         }
@@ -270,17 +273,20 @@ namespace NekoModForVFurrika
         private static void Postfix(BubbleObject __instance)
         {
             var img = GameObject.Find("SCORE/Next Fruit Sprite").GetComponent<Image>();
-            int sprite = 0;
-            if (img.sprite.name.Contains("ANDRE")) sprite = 1;
-            if (img.sprite.name.Contains("Star")) sprite = 2;
-            if (img.sprite.name.Contains("Skai")) sprite = 3;
-            if (img.sprite.name.Contains("MIXI")) sprite = 4;
-            if (img.sprite.name.Contains("S3A")) sprite = 5;
-            if (img.sprite.name.Contains("Dooper")) sprite = 6;
-            if (img.sprite.name.Contains("Chai")) sprite = 7;
-            if (img.sprite.name.Contains("JT")) sprite = 8;
-            if (img.sprite.name.Contains("Chester")) sprite = 9;
-            if (img.sprite.name.Contains("dingo")) sprite = 10;
+            int sprite = -1;
+            if (img.sprite.name.Contains("LUIROI")) sprite = 0;
+            else if (img.sprite.name.Contains("ANDRE")) sprite = 1;
+            else if (img.sprite.name.Contains("Star")) sprite = 2;
+            else if (img.sprite.name.Contains("Skai")) sprite = 3;
+            else if (img.sprite.name.Contains("MIXI")) sprite = 4;
+            else if (img.sprite.name.Contains("S3A")) sprite = 5;
+            else if (img.sprite.name.Contains("Dooper")) sprite = 6;
+            else if (img.sprite.name.Contains("Chai")) sprite = 7;
+            else if (img.sprite.name.Contains("JT")) sprite = 8;
+            else if (img.sprite.name.Contains("Chester")) sprite = 9;
+            else if (img.sprite.name.Contains("dingo")) sprite = 10;
+
+            if (sprite == -1) return;
             var customSprite = NekoMod.GetLoadedHead(sprite);
             if (customSprite != null) img.sprite = customSprite;
         }
@@ -292,17 +298,20 @@ namespace NekoModForVFurrika
         private static void Postfix(FruitController __instance)
         {
             var img = __instance.GetComponent<SpriteRenderer>();
-            int sprite = 0;
-            if (img.sprite.name.Contains("ANDRE")) sprite = 1;
-            if (img.sprite.name.Contains("Star")) sprite = 2;
-            if (img.sprite.name.Contains("Skai")) sprite = 3;
-            if (img.sprite.name.Contains("MIXI")) sprite = 4;
-            if (img.sprite.name.Contains("S3A")) sprite = 5;
-            if (img.sprite.name.Contains("Dooper")) sprite = 6;
-            if (img.sprite.name.Contains("Chai")) sprite = 7;
-            if (img.sprite.name.Contains("JT")) sprite = 8;
-            if (img.sprite.name.Contains("Chester")) sprite = 9;
-            if (img.sprite.name.Contains("dingo")) sprite = 10;
+            int sprite = -1;
+            if (img.sprite.name.Contains("LUIROI")) sprite = 0;
+            else if (img.sprite.name.Contains("ANDRE")) sprite = 1;
+            else if (img.sprite.name.Contains("Star")) sprite = 2;
+            else if (img.sprite.name.Contains("Skai")) sprite = 3;
+            else if (img.sprite.name.Contains("MIXI")) sprite = 4;
+            else if (img.sprite.name.Contains("S3A")) sprite = 5;
+            else if (img.sprite.name.Contains("Dooper")) sprite = 6;
+            else if (img.sprite.name.Contains("Chai")) sprite = 7;
+            else if (img.sprite.name.Contains("JT")) sprite = 8;
+            else if (img.sprite.name.Contains("Chester")) sprite = 9;
+            else if (img.sprite.name.Contains("dingo")) sprite = 10;
+
+            if (sprite == -1) return;
             var customSprite = NekoMod.GetLoadedHead(sprite);
             if (customSprite != null) img.sprite = customSprite;
         }

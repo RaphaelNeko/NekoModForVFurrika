@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using MelonLoader;
 using NekoModForVFurrika; // The namespace of your mod class
 // ...
-[assembly: MelonInfo(typeof(NekoMod), "Neko Mod for VFurrika", "1.0.0", "Raphael Neko")]
+[assembly: MelonInfo(typeof(NekoMod), "Neko Mod for VFurrika", "1.1.0", "Raphael Neko")]
 [assembly: MelonGame("Lui_Co", "VFurrika!")]
 
 // General Information about an assembly is controlled through the following
